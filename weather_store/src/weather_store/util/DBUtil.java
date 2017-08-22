@@ -13,22 +13,28 @@ import java.util.Properties;
 
 public class DBUtil {
 
-	private static final String DRIVER_NAME = "oracle.jdbc.driver.OracleDriver";
-	private static final String CON_URL = "jdbc:oracle:thin:@119.205.160.192:1521:xe";
-	private static final String USER_NAME = "test";
-	private static final String USER_PASSWORD = "1234";
+	private static final String DRIVER_NAME;
+	private static final String CON_URL;
+	private static final String USER_NAME;
+	private static final String USER_PASSWORD;
 	private static DBUtil singletone;
 
-	private DBUtil() {
+	static {
 		Properties prop = new Properties();
-			try {
-				prop.load(new FileReader("src/jdbc.properties"));
-			} catch (FileNotFoundException e1) {
-				System.out.println("지정된 파일을 찾을 수 없습니다.");
-			} catch (IOException e) {
-				System.out.println();
-			}
-		
+		try {
+			prop.load(new FileReader("src/jdbc.properties"));
+		} catch (FileNotFoundException e1) {
+			System.out.println("지정된 파일을 찾을 수 없습니다.");
+		} catch (IOException e) {
+			System.out.println("IOExeption");
+		}
+		DRIVER_NAME = prop.getProperty("driver");
+		CON_URL = prop.getProperty("url");
+		USER_NAME = prop.getProperty("user");
+		USER_PASSWORD = prop.getProperty("password");
+	}
+
+	private DBUtil() {
 		try {
 			Class.forName(DRIVER_NAME);
 		} catch (ClassNotFoundException e) {
