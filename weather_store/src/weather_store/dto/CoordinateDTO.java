@@ -1,6 +1,6 @@
-package weather_store.town;
+package weather_store.dto;
 
-public class TownDTO {
+public class CoordinateDTO {
 	
 	private String code;
 	private String name;
@@ -9,7 +9,7 @@ public class TownDTO {
 	private String gridX;
 	private String gridY;
 	
-	public TownDTO(String code, String name, String parentCode,
+	public CoordinateDTO(String code, String name, String parentCode,
 			String parentName, String gridX, String gridY) {
 		super();
 		this.code = code;
@@ -20,7 +20,7 @@ public class TownDTO {
 		this.gridY = gridY;
 	}
 
-	public TownDTO(String code, String name, String parentCode,
+	public CoordinateDTO(String code, String name, String parentCode,
 			String parentName) {
 		super();
 		this.code = code;

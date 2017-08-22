@@ -12,6 +12,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
+import weather_store.dto.CoordinateDTO;
+
 
 public class TownCodeService {
 	
@@ -29,9 +31,9 @@ public class TownCodeService {
 	private final String KEY_Y = "y";
 	
 	//각각의 노드를 저장할 리스트
-	private List<TownDTO> topList = new ArrayList<TownDTO>();
-	private List<TownDTO> mdlList = new ArrayList<TownDTO>();
-	private List<TownDTO> leafList = new ArrayList<TownDTO>();
+	private List<CoordinateDTO> topList = new ArrayList<CoordinateDTO>();
+	private List<CoordinateDTO> mdlList = new ArrayList<CoordinateDTO>();
+	private List<CoordinateDTO> leafList = new ArrayList<CoordinateDTO>();
 	
 	//생성자
 	public TownCodeService() {
@@ -50,7 +52,7 @@ public class TownCodeService {
 		System.out.println("=========");
 		
 		//중간 노드
-		for(TownDTO dto : topList) {
+		for(CoordinateDTO dto : topList) {
 			jsonArray = getJSON(String.format(mdlURL,  dto.getCode()));
 			parseJSON(mdlList, jsonArray, dto.getCode(), dto.getName(), false);
 		}
@@ -59,7 +61,7 @@ public class TownCodeService {
 		System.out.println("=========");
 		
 		//최하 노드
-		for(TownDTO dto : mdlList) {
+		for(CoordinateDTO dto : mdlList) {
 			jsonArray = getJSON(String.format(leafURL, dto.getCode()));
 			parseJSON(leafList, jsonArray, dto.getCode(), dto.getName(), true);
 		}		
@@ -79,17 +81,17 @@ public class TownCodeService {
 			PrintStream out = new PrintStream(new FileOutputStream(path));
 			
 			//최고 노드
-			for (TownDTO dto : topList) {
+			for (CoordinateDTO dto : topList) {
 				out.println(dto);
 			}
 			
 			//중간 노드
-			for (TownDTO dto : mdlList) {
+			for (CoordinateDTO dto : mdlList) {
 				out.println(dto);
 			}
 			
 			//최하노드
-			for (TownDTO dto : leafList) {
+			for (CoordinateDTO dto : leafList) {
 				out.println(dto);
 			}
 			
@@ -145,23 +147,23 @@ public class TownCodeService {
      * @param parentName 부모 노드 이름 
      * @param isLast 최하노드인가?
 	 */	
-	private List<TownDTO> parseJSON(List<TownDTO> list, JSONArray array, 
+	private List<CoordinateDTO> parseJSON(List<CoordinateDTO> list, JSONArray array, 
 					 		String parentCode, String parentName, boolean isLast) {
 		
 		JSONObject data = null;
-		TownDTO town = null;
+		CoordinateDTO town = null;
 		for (int i = 0; i < array.size(); i++) {
 			data = (JSONObject) array.get(i);
 			
 			if(!isLast) {
 				//최상, 중간 노드
-				town = new TownDTO(data.get(KEY_CODE).toString(), 
+				town = new CoordinateDTO(data.get(KEY_CODE).toString(), 
 								   data.get(KEY_VALUE).toString(),
 								   parentCode, parentName);
 				
 			} else {
 				//최하 노드
-				town = new TownDTO(data.get(KEY_CODE).toString(),
+				town = new CoordinateDTO(data.get(KEY_CODE).toString(),
 						           data.get(KEY_VALUE).toString(),
 						           parentCode,
 						           parentName,
