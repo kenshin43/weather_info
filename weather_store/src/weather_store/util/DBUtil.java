@@ -49,8 +49,9 @@ public class DBUtil {
 		return singletone;
 	}
 
-	public static Connection getConnection() {
+	public Connection getConnection() {
 		Connection con = null;
+		System.out.println(CON_URL+"|"+USER_NAME+"|"+USER_PASSWORD);
 		try {
 			con = DriverManager.getConnection(CON_URL, USER_NAME, USER_PASSWORD);
 		} catch (SQLException e) {
@@ -59,7 +60,7 @@ public class DBUtil {
 		return con;
 	}
 
-	public static void close(ResultSet rs, Connection con, PreparedStatement pstmt) {
+	public void close(ResultSet rs, Connection con, PreparedStatement pstmt) {
 		try {
 			rs.close();
 			close(con, pstmt);
@@ -67,7 +68,7 @@ public class DBUtil {
 		}
 	}
 
-	public static void close(Connection con, PreparedStatement pstmt) {
+	public void close(Connection con, PreparedStatement pstmt) {
 		try {
 			con.close();
 			pstmt.close();
