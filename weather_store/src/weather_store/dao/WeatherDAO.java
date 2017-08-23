@@ -1,6 +1,7 @@
 package weather_store.dao;
 
 import weather_store.town.TownCodeService;
+import weather_store.util.DBUtil;
 
 public class WeatherDAO {
 	private static WeatherDAO weatherDAO;

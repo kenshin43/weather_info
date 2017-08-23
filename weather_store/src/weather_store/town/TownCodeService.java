@@ -1,9 +1,7 @@
 package weather_store.town;
 
 import java.io.BufferedReader;
-import java.io.FileOutputStream;
 import java.io.InputStreamReader;
-import java.io.PrintStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Connection;
@@ -76,8 +74,8 @@ public class TownCodeService {
 				pstmt.setString(2, dto.getName());
 				pstmt.setInt(3, Integer.parseInt(dto.getParentCode() == null ? "0" : dto.getParentCode()));
 				pstmt.setString(4, dto.getParentName());
-				pstmt.setInt(5, Integer.parseInt(dto.getGridX()==null?"0":dto.getGridX()));
-				pstmt.setInt(6, Integer.parseInt(dto.getGridY()==null?"0":dto.getGridY()));
+				pstmt.setInt(5, Integer.parseInt(dto.getGridX() == null ? "0" : dto.getGridX()));
+				pstmt.setInt(6, Integer.parseInt(dto.getGridY() == null ? "0" : dto.getGridY()));
 				pstmt.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
