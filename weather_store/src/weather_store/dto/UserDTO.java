@@ -8,6 +8,8 @@ public class UserDTO {
 	private int isAdmin;
 	
 	// 
+	public UserDTO() {
+	}
 	public UserDTO(String id, String pw) {
 		super();
 		this.id = id;
