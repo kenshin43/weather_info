@@ -19,8 +19,13 @@ public class WeatherDAO {
 	public int coordinateSQLInsert() {
 		int status = -1;
 		TownCodeService tcs = new TownCodeService();
-		tcs.outputSQL();
-		return 0;
+		status = tcs.outputSQL();
+		return status;
 	}
 
+	public int weatherSQLInsert() {
+		int status = -1;
+		
+		return status;
+	}
 } // end of class
