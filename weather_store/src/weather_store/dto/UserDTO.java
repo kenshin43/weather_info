@@ -7,13 +7,20 @@ public class UserDTO {
 	private String addr="";
 	private int isAdmin;
 	
-	public UserDTO(String id, String pw, String name, String addr, int isAdmin) {
+	// 
+	public UserDTO(String id, String pw) {
+		super();
+		this.id = id;
+		this.pw = pw;
+	}
+	
+	// 
+	public UserDTO(String id, String pw, String name, String addr) {
 		super();
 		this.id = id;
 		this.pw = pw;
 		this.name = name;
 		this.addr = addr;
-		this.isAdmin = isAdmin;
 	}
 
 	public String getId() {
