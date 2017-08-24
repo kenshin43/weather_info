@@ -1,7 +1,7 @@
 package weather_store.function;
 
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
 
 import weather_store.dao.UserDAO;
@@ -15,7 +15,7 @@ public class UserListService implements Service{
 		System.out.println("회원목록");
 		System.out.println("--------------------");
 		
-		ArrayList<UserDTO> list = UserDAO.getInstance().allUsers();
+		List<UserDTO> list = UserDAO.getInstance().allUsers();
 		Iterator<UserDTO> it = list.iterator();
 		
 		while(it.hasNext()) {
@@ -24,4 +24,9 @@ public class UserListService implements Service{
 		}
 		
 	} // end of execute()
+	
+	public static void main(String[] args) {
+		UserListService u = new UserListService();
+		u.Excute(new Scanner(System.in));
+	}
 } // end of class

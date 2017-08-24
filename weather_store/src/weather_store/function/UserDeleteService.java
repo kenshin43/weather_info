@@ -24,4 +24,9 @@ public class UserDeleteService implements Service{
 		}
 		
 	} // end of method
+	
+	public static void main(String[] args) {
+		UserDeleteService u = new UserDeleteService();
+		u.Excute(new Scanner(System.in));
+	}
 } // end of class

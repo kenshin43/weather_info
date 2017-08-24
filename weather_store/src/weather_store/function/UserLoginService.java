@@ -13,14 +13,23 @@ public class UserLoginService implements Service{
 		System.out.println("---------------------");
 		System.out.println("로그인");
 		System.out.println("---------------------");
-		System.out.println("아이디 : ");
+		System.out.print("아이디 : ");
 		String id = sc.nextLine();
-		System.out.println("비밀번호 : ");
+		System.out.print("비밀번호 : ");
 		String pw = sc.nextLine();
 		
 		String uname = UserDAO.getInstance().userLogin(id, pw);
 		
-		System.out.println(uname + "님 로그인하였습니다");
+		if(uname == null) {
+			System.out.println("로그인 안됨");
+		} else {
+			System.out.println(uname + "님 로그인하였습니다");
+		}
 		
 	} // end of method
+	
+	public static void main(String[] args) {
+		UserLoginService u = new UserLoginService();
+		u.Excute(new Scanner(System.in));
+	}
 } // end of class

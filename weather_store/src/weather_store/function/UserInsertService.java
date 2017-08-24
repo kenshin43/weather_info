@@ -10,18 +10,16 @@ public class UserInsertService implements Service{
 	@Override
 	public void Excute(Scanner sc) {
 		
-		System.out.println("------------------------------------");
-		System.out.println("회원가입");
-		System.out.println("------------------------------------");
-		
-		System.out.println("아이디 :");
+		System.out.println("==========회원가입==========");
+		System.out.print("아이디 : ");
 		String id = sc.nextLine();
-		System.out.println("비밀번호 : ");
+		System.out.print("비밀번호 : ");
 		String pw = sc.nextLine();
-		System.out.println("이름 : ");
+		System.out.print("이름 : ");
 		String name = sc.nextLine();
-		System.out.println("주소 : ");
+		System.out.print("주소 : ");
 		String addr = sc.nextLine();
+		System.out.println("----------------------------");
 		
 		int check = UserDAO.getInstance().userInsert(new UserDTO(id, pw, name, addr));
 		
@@ -32,4 +30,10 @@ public class UserInsertService implements Service{
 		}
 		
 	} // end of method
+	
+	public static void main(String[] args) {
+		UserInsertService u = new UserInsertService();
+		u.Excute(new Scanner(System.in));
+		
+	} // end of main
 } // end of class
