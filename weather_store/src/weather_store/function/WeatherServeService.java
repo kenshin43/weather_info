@@ -8,6 +8,11 @@ import weather_store.dao.WeatherDAO;
 import weather_store.dto.WeatherDTO;
 
 public class WeatherServeService implements Service {
+	private String id;
+
+	public WeatherServeService(String id) {
+		this.id = id;
+	}
 
 	@Override
 	public void Excute(Scanner sc) {
@@ -16,7 +21,7 @@ public class WeatherServeService implements Service {
 		Map<Long, String> codeList = dao.faveriteLocal("dddd");
 		codeList.entrySet().forEach(t -> {
 			List<WeatherDTO> list = dao.weatherServe(t.getKey());
-			System.out.println("======================  기상정보 : [["+t.getValue()+"]]");
+			System.out.println("======================  기상정보 : [[" + t.getValue() + "]]");
 			list.forEach(x -> {
 				StringBuilder sb = new StringBuilder();
 				if (x.getDay() == 0) {
@@ -49,9 +54,4 @@ public class WeatherServeService implements Service {
 			System.out.println("-----------------------------------------------------------------------------------");
 		});
 	}// end of Excute;
-
-	public static void main(String[] args) {
-		WeatherServeService w = new WeatherServeService();
-		w.Excute(new Scanner(System.in));
-	}
 }

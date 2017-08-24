@@ -72,4 +72,27 @@ public class StoreDAO {
 		db.close(rs, con, pstmt);
 		return category;
 	}
+
+	public int saleProduct(String productName) {
+		int price = -1;
+		Map<Integer, String> category = new HashMap<Integer, String>();
+		List<ProductDTO> list = new ArrayList<ProductDTO>();
+		DBUtil db = DBUtil.getInstance();
+		Connection con = db.getConnection();
+		String sql = "select price from product where pro_name = ?";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, productName);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				price = rs.getInt("price");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return price;
+	}
 }// end of class

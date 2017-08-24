@@ -51,7 +51,6 @@ public class DBUtil {
 
 	public Connection getConnection() {
 		Connection con = null;
-		System.out.println(CON_URL+"|"+USER_NAME+"|"+USER_PASSWORD);
 		try {
 			con = DriverManager.getConnection(CON_URL, USER_NAME, USER_PASSWORD);
 		} catch (SQLException e) {

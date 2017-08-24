@@ -10,6 +10,11 @@ import weather_store.dao.WeatherDAO;
 import weather_store.dto.CoordinateDTO;
 
 public class WeatherCoordinateService implements Service {
+	private String id;
+
+	public WeatherCoordinateService(String id) {
+		this.id = id;
+	}
 
 	@Override
 	public void Excute(Scanner sc) {
@@ -17,7 +22,6 @@ public class WeatherCoordinateService implements Service {
 		int[] i = new int[1];
 		i[0] = 1;
 		WeatherDAO dao = WeatherDAO.getInstance();
-		String id = sc.nextLine();
 		Map<Long, String> faveriteMap = dao.faveriteLocal(id);
 		List<Long> faveriteList = new ArrayList<Long>();
 		System.out.println("======================  ¼±È£Áö¿ª : " + id + "´Ô ");
