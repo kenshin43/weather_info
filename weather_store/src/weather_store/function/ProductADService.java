@@ -33,7 +33,7 @@ public class ProductADService implements Service {
 				cateMap.entrySet().forEach(t -> {
 					System.out.println("----->" + t.getValue() + "의 <<목록>>");
 					dao.productList(t.getKey()).forEach(x -> {
-						System.out.println(i[0]++ + "|" + x.getProName() + "\t" + x.getPrice() + "원!");
+						System.out.println(x.getProCode() + "|" + x.getProName() + "\t" + x.getPrice() + "원!");
 						System.out.println("---------");
 						System.out.println(x.getComment());
 						System.out.println("---------");
@@ -50,7 +50,7 @@ public class ProductADService implements Service {
 				System.out.println("정보 :  선택해 주세요.");
 				int select = intScan(cateList.size(), sc);
 				dao.productList(select).forEach(t -> {
-					System.out.println(i[0]++ + "|" + t.getProName() + "\t" + t.getPrice() + "원!");
+					System.out.println(t.getProCode() + "|" + t.getProName() + "\t" + t.getPrice() + "원!");
 					System.out.println("---------");
 					System.out.println(t.getComment());
 					System.out.println("---------");
@@ -93,16 +93,16 @@ public class ProductADService implements Service {
 		String name = "";
 		System.out.println("안내 :  구매할 이름의 제품을 입력해 주세요. exit를 입력하면 종료됩니다.");
 		while (true) {
-			int price = dao.saleProduct(name = sc.nextLine());
-			if (price == -1) {
-				System.out.println("안내 :  잘못 입력하셨습니다. exit를 입력하여 구매를 취소합니다.");
-			} else {
-				System.out.println(id + "님! " + name + "을(를) " + price + "에 구매하였습니다!!");
-				break;
-			}
-			if(name.equals("exit")) {
+			name = sc.nextLine();
+			if (name.equals("exit")) {
 				System.out.println("구매를 취소합니다.");
 				break;
+			}
+			int price = dao.saleProduct(name);
+			if (price == -1) {
+				System.out.println("안내 :  잘못 입력하셨습니다. 다시 입력하거나, exit를 입력하여 구매를 취소합니다.");
+			} else {
+				System.out.println(id + "님! " + name + "을(를) " + price + "원에 구매하였습니다!!");
 			}
 		}
 	}
