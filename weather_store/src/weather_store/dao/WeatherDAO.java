@@ -5,9 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import weather_store.dto.CoordinateDTO;
 import weather_store.dto.WeatherDTO;
 import weather_store.town.TownCodeService;
 import weather_store.town.WeatherRSS;
@@ -46,23 +48,25 @@ public class WeatherDAO {
 		return status;
 	}
 
-	public List<Long> faveriteLocal(String id) {
-		List<Long> list = new ArrayList<Long>();
+	public Map<Long, String> faveriteLocal(String id) {
+		Map<Long, String> map = new HashMap<Long, String>();
 		DBUtil db = DBUtil.getInstance();
 		Connection con = db.getConnection();
-		String sql = "select local_code from INTERESTAREA where id = ?";
+		String sql = "select i.local_code,c.local_name from interestarea i join coordinates c on i.local_code=c.local_code where i.id = ?";
 		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, id);
-			ResultSet rs = pstmt.executeQuery();
+			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				list.add(rs.getLong(1));
+				map.put(rs.getLong(1), rs.getString(2));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return list;
+		db.close(rs, con, pstmt);
+		return map;
 	}
 
 	public List<WeatherDTO> weatherServe(long localCode) {
@@ -73,10 +77,11 @@ public class WeatherDAO {
 		Connection con = db.getConnection();
 		String sql = "select * from coordinates where local_code = ?";
 		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setLong(1, localCode);
-			ResultSet rs = pstmt.executeQuery();
+			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				x = rs.getInt("x");
 				y = rs.getInt("y");
@@ -91,7 +96,8 @@ public class WeatherDAO {
 				weather.setX(rs.getInt("x"));
 				weather.setY(rs.getInt("y"));
 				weather.setDataSeq(rs.getInt("data_seq"));
-				weather.setHour(rs.getInt("day"));
+				weather.setHour(rs.getInt("hour"));
+				weather.setDay(rs.getInt("day"));
 				weather.setTemp(rs.getInt("temp"));
 				weather.setTmx(rs.getInt("tmx"));
 				weather.setTmn(rs.getInt("tmn"));
@@ -114,8 +120,71 @@ public class WeatherDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		db.close(rs, con, pstmt);
 		return list;
 	}
-	
-	
+
+	public List<CoordinateDTO> coordinateSearch(String addr) {
+		List<CoordinateDTO> list = new ArrayList<CoordinateDTO>();
+		DBUtil db = DBUtil.getInstance();
+		Connection con = db.getConnection();
+		String sql = "select * from coordinates where local_name = ?";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, addr);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				CoordinateDTO dto = new CoordinateDTO();
+				dto.setCode(rs.getString("local_code"));
+				dto.setName(rs.getString("local_name"));
+				dto.setParentCode(rs.getString("parent_code"));
+				dto.setParentName(rs.getString("parent_name"));
+				dto.setGridX(rs.getString("x"));
+				dto.setGridY(rs.getString("y"));
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		db.close(rs, con, pstmt);
+		return list;
+	}
+
+	public int coordinateAdd(String id, Long localCode) {
+		int status = -1;
+		DBUtil db = DBUtil.getInstance();
+		Connection con = db.getConnection();
+		String sql = "insert into interestarea values (?,?)";
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setLong(2, localCode);
+			status = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		db.close(con, pstmt);
+		return status;
+	}
+
+	public int coordinateDelete(String id, Long localCode) {
+		int status = -1;
+		DBUtil db = DBUtil.getInstance();
+		Connection con = db.getConnection();
+		String sql = "delete interestarea where id= ? and local_code = ?";
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setLong(2, localCode);
+			status = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		db.close(con, pstmt);
+		return status;
+	}
 } // end of class

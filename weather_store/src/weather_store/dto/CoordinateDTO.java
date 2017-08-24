@@ -1,16 +1,18 @@
 package weather_store.dto;
 
 public class CoordinateDTO {
-	
+
 	private String code;
 	private String name;
 	private String parentCode;
 	private String parentName;
 	private String gridX;
 	private String gridY;
-	
-	public CoordinateDTO(String code, String name, String parentCode,
-			String parentName, String gridX, String gridY) {
+
+	public CoordinateDTO() {
+	}
+
+	public CoordinateDTO(String code, String name, String parentCode, String parentName, String gridX, String gridY) {
 		super();
 		this.code = code;
 		this.name = name;
@@ -20,8 +22,7 @@ public class CoordinateDTO {
 		this.gridY = gridY;
 	}
 
-	public CoordinateDTO(String code, String name, String parentCode,
-			String parentName) {
+	public CoordinateDTO(String code, String name, String parentCode, String parentName) {
 		super();
 		this.code = code;
 		this.name = name;
@@ -79,9 +80,8 @@ public class CoordinateDTO {
 
 	@Override
 	public String toString() {
-		return "code=" + code + ", name=" + name + ", parentCode="
-				+ parentCode + ", parentName=" + parentName + ", gridX="
-				+ gridX + ", gridY=" + gridY ;
-	}	
-	
+		return "code=" + code + ", name=" + name + ", parentCode=" + parentCode + ", parentName=" + parentName
+				+ ", gridX=" + gridX + ", gridY=" + gridY;
+	}
+
 }
