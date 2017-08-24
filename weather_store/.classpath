@@ -2,8 +2,8 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="D:/oraclexe/app/oracle/product/11.2.0/server/jdbc/lib/ojdbc6.jar"/>
-	<classpathentry kind="lib" path="D:/hyunmoYang/Documents/GitHub/weather_info/weather_store/lib/jdom-2.0.5.jar"/>
-	<classpathentry kind="lib" path="D:/hyunmoYang/Documents/GitHub/weather_info/weather_store/lib/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="D:/lib/jdom-2.0.5.jar"/>
+	<classpathentry kind="lib" path="D:/lib/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="D:/lib/ojdbc6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -24,6 +24,9 @@ public class WeatherDTO {
 	private int r06;
 	private int s06;
 
+	public WeatherDTO() {
+	}
+
 	public WeatherDTO(int x, int y, int hour, int dataSeq, int day, int temp, int tmx, int tmn, int sky, int pty,
 			String wfKOR, String wfEN, int pop, int reh, int ws, int wd, String wdKOR, String wdEN, int r12, int s12,
 			int r06, int s06) {
