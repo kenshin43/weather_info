@@ -13,6 +13,7 @@ import java.util.List;
 
 import weather_store.dto.UserDTO;
 import weather_store.util.DBUtil;
+import weather_store.util.SHA256Util;
 /**
  * @author hyunmoYang
  */
@@ -45,30 +46,22 @@ public class UserDAO {
 			ps = con.prepareStatement("INSERT INTO person (id, pw, name, addr, salt, passwd) VALUES (?, ?, ?, ?, ?, ?)");
 			
 			String password = user.getPw();
-			MessageDigest md = MessageDigest.getInstance("SHA-1");
-			md.update(password.getBytes("UTF-8"));
-			byte[] bytes = md.digest();
 			
+			String salt = SHA256Util.generateSalt();
+			String newPassword = SHA256Util.getEncrypt(user.getPw(), salt);
+		
 			ps.setString(1, user.getId());
-			ps.setBytes(2, bytes);
+			ps.setString(2, newPassword);
 			ps.setString(3, user.getName());
 			ps.setString(4, user.getAddr());
-			ps.setBytes(5, bytes);
+			ps.setString(5, salt);
 			ps.setString(6, user.getPasswd());
 			result = ps.executeUpdate();
 			
-			for(byte b : bytes) {
-				System.out.printf("%2X ", b);
-			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e + "=>userInsert fail");
-		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} finally {
 			db.close(con, ps);
 		}
@@ -108,7 +101,7 @@ public class UserDAO {
 	 * @param pw
 	 * @return uname
 	 */
-	public String userLogin(String id, String pw) {
+	public String userLogin(String id, String inputpw) {
 		DBUtil db = DBUtil.getInstance();
 		Connection con = db.getConnection();
 		ResultSet rs = null; // select시에 추가해야 할 부분
@@ -122,28 +115,34 @@ public class UserDAO {
 			rs = ps.executeQuery();
 			
 			if (rs.next()) {
-				byte[] salt = rs.getBytes("salt");		// DB에서 가져온 salt
-//				byte[] passwd = rs.getBytes("pw");		// DB에서 가져온 비밀번호
-				String passwd = rs.getString("pw");
+				String dbSalt = rs.getString("salt");		// DB에서 가져온 salt
+				String dbPasswd = rs.getString("pw");		// DB에서 가져온 비밀번호
 				
-				MessageDigest md = MessageDigest.getInstance("SHA-1");
-				md.update(pw.getBytes("UTF-8"));
-				byte[] bytes = md.digest();
+				byte[] passwd = SHA256Util.fromHex(dbPasswd);
+				byte[] salt = SHA256Util.fromHex(dbSalt);
 				
-				System.out.println("db =>");		// db
-//				for(byte b : passwd.getBytes()) {
-//					System.out.printf("%2X ", b);
-//				}
-				System.out.println(passwd);
+				inputpw = SHA256Util.getEncrypt(inputpw, salt);
+				
+				System.out.println("dbsal : ");
+				for(byte b : salt) {
+					System.out.printf("%02X", b);
+				}
 				System.out.println();
 				
-				System.out.println("input =>");		// 입력
-				for(byte b : bytes) {
-					System.out.printf("%2X ", b);
+				System.out.println("dbpaa : ");
+				for(byte b : passwd) {
+					System.out.printf("%02X", b);
 				}
+				System.out.println();
+				System.out.println(inputpw);
 				
-				boolean pass = MessageDigest.isEqual(passwd.getBytes(), bytes); //true,false
+				System.out.println(new String());
+				System.out.println(passwd);
+				System.out.println(inputpw.getBytes());
+				
+				boolean pass = MessageDigest.isEqual(inputpw.getBytes(), passwd); //true,false
 				System.out.println(pass);
+				
 				
 				
 				if(pass == true) {
@@ -168,7 +167,6 @@ public class UserDAO {
 
 	/**
 	 * 관리자 - 회원목록
-	 * 
 	 * @return list
 	 */
 	public List<UserDTO> allUsers() {

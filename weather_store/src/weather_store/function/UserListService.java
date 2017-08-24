@@ -1,30 +1,41 @@
 package weather_store.function;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
 import weather_store.dao.UserDAO;
 import weather_store.dto.UserDTO;
 
-public class UserListService implements Service{
+public class UserListService implements Service {
+	private String id = "";
+
+	public UserListService() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public UserListService(String id) {
+		this.id = id;
+	}
 
 	@Override
 	public void Excute(Scanner sc) {
-		System.out.println("--------------------");
-		System.out.println("회원목록");
-		System.out.println("--------------------");
-		
+		System.out.println("==================회원목록==================");
+
 		List<UserDTO> list = UserDAO.getInstance().allUsers();
-		Iterator<UserDTO> it = list.iterator();
-		
-		while(it.hasNext()) {
-			UserDTO dto = it.next();
-			System.out.println(dto.toString());
-		}
-		
+		list.forEach(x -> {
+			StringBuilder sb = new StringBuilder();
+			sb.append("ID :");
+			sb.append(x.getId());
+			sb.append("\t이름 : ");
+			sb.append(x.getName());
+			sb.append("\t주소");
+			sb.append(x.getAddr());
+			System.out.println(sb.toString());
+		});
+		System.out.println("--------------------------------------------");
+
 	} // end of execute()
-	
+
 	public static void main(String[] args) {
 		UserListService u = new UserListService();
 		u.Excute(new Scanner(System.in));
