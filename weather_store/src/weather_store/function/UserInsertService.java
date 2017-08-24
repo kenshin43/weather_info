@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import weather_store.dao.UserDAO;
 import weather_store.dto.UserDTO;
+import weather_store.util.SecurityUtil;
 
 public class UserInsertService implements Service{
 
@@ -15,13 +16,14 @@ public class UserInsertService implements Service{
 		String id = sc.nextLine();
 		System.out.print("비밀번호 : ");
 		String pw = sc.nextLine();
+		String newpwd=SecurityUtil.encrypt(pw);
 		System.out.print("이름 : ");
 		String name = sc.nextLine();
 		System.out.print("주소 : ");
 		String addr = sc.nextLine();
 		System.out.println("----------------------------");
 		
-		int check = UserDAO.getInstance().userInsert(new UserDTO(id, pw, name, addr));
+		int check = UserDAO.getInstance().userInsert(new UserDTO(id, newpwd, name, addr));
 		
 		if(check == 0) {
 			System.out.println("회원가입 실패");

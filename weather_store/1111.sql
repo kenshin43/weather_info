@@ -75,3 +75,9 @@ SELL_DATE   NUMBER,
 PRO_CODE    NUMBER      REFERENCES PRODUCT(PRO_CODE),
 PRIMARY KEY(SELL_DATE, PRO_CODE)
 );
+
+select * from person;
+SELECT name, pw, salt FROM person WHERE id = 'iiiii';
+ALTER TABLE person ADD salt VARCHAR(300);
+ALTER TABLE person ADD passwd VARCHAR2(50);
+ALTER TABLE person MODIFY pw VARCHAR2(1024);

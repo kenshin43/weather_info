@@ -10,10 +10,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import weather_store.dto.UserDTO;
 import weather_store.util.DBUtil;
-import weather_store.util.SHA256Util;
+//import weather_store.util.SHA256Util;
+
 /**
  * @author hyunmoYang
  */
@@ -43,22 +43,22 @@ public class UserDAO {
 		int result = 0;
 
 		try {
-			ps = con.prepareStatement("INSERT INTO person (id, pw, name, addr, salt, passwd) VALUES (?, ?, ?, ?, ?, ?)");
-			
-			String password = user.getPw();
-			
-			String salt = SHA256Util.generateSalt();
-			String newPassword = SHA256Util.getEncrypt(user.getPw(), salt);
-		
+			ps = con.prepareStatement(
+					"INSERT INTO person (id, pw, name, addr, salt, passwd) VALUES (?, ?, ?, ?, ?, ?)");
+
+//			String salt = SHA256Util.generateSalt();
+//			String newPassword = SHA256Util.getEncrypt(user.getPw(), salt);
+
 			ps.setString(1, user.getId());
-			ps.setString(2, newPassword);
+			ps.setString(2, user.getPw());
 			ps.setString(3, user.getName());
 			ps.setString(4, user.getAddr());
-			ps.setString(5, salt);
+			ps.setString(5, null);
 			ps.setString(6, user.getPasswd());
 			result = ps.executeUpdate();
-			
-			
+
+//			System.out.println("salt : " + salt);
+//			System.out.println("newPassword : " + newPassword);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e + "=>userInsert fail");
@@ -66,8 +66,7 @@ public class UserDAO {
 			db.close(con, ps);
 		}
 		return result;
-		
-		
+
 	} // end of userInsert()
 
 	/**
@@ -97,11 +96,31 @@ public class UserDAO {
 
 	/**
 	 * 로그인
+	 * 
 	 * @param id
 	 * @param pw
 	 * @return uname
 	 */
-	public String userLogin(String id, String inputpw) {
+//
+//	public Boolean login(String id, String pwd) throws NoSuchAlgorithmException {
+//		DBUtil db = DBUtil.getInstance();
+//		Connection con = db.getConnection();
+//		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+//		String sql = "SELECT name, pw, salt FROM person WHERE id = ?";
+//		boolean result = false;
+//		try {
+//			pstmt = con.prepareStatement(sql);
+//			pstmt.setString(1, id);
+//			rs = pstmt.executeQuery();
+////			result = SHA256Util.decodePwd(rs, pwd);
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return result;
+//	}
+
+	public  static String userLogin(String id, String inputpw) {
 		DBUtil db = DBUtil.getInstance();
 		Connection con = db.getConnection();
 		ResultSet rs = null; // select시에 추가해야 할 부분
@@ -113,46 +132,26 @@ public class UserDAO {
 
 			ps.setString(1, id);
 			rs = ps.executeQuery();
-			
+
 			if (rs.next()) {
-				String dbSalt = rs.getString("salt");		// DB에서 가져온 salt
-				String dbPasswd = rs.getString("pw");		// DB에서 가져온 비밀번호
-				
-				byte[] passwd = SHA256Util.fromHex(dbPasswd);
-				byte[] salt = SHA256Util.fromHex(dbSalt);
-				
-				inputpw = SHA256Util.getEncrypt(inputpw, salt);
-				
-				System.out.println("dbsal : ");
-				for(byte b : salt) {
-					System.out.printf("%02X", b);
-				}
-				System.out.println();
-				
-				System.out.println("dbpaa : ");
-				for(byte b : passwd) {
-					System.out.printf("%02X", b);
-				}
-				System.out.println();
-				System.out.println(inputpw);
-				
-				System.out.println(new String());
-				System.out.println(passwd);
-				System.out.println(inputpw.getBytes());
-				
-				boolean pass = MessageDigest.isEqual(inputpw.getBytes(), passwd); //true,false
-				System.out.println(pass);
+				String dbSalt = rs.getString("salt"); // DB에서 가져온 salt
+				String dbPasswd = rs.getString("pw"); // DB에서 가져온 비밀번호
+
 				
 				
+				 
 				
-				if(pass == true) {
+				System.out.println("입력 : " + inputpw);
+//
+				boolean pass = MessageDigest.isEqual(inputpw.getBytes(), dbPasswd.getBytes()); // true,false
+//				System.out.println(pass);
+
+				if (pass == true) {
 					uname = rs.getString("name");
-				}
-				else {
+				} else {
 					System.out.println("아이디/비밀번호를 잘못 입력하셨습니다.");
 				}
-			}
-			else {
+			} else {
 				System.out.println("id 없음");
 			}
 		} catch (SQLException se) {
@@ -167,6 +166,7 @@ public class UserDAO {
 
 	/**
 	 * 관리자 - 회원목록
+	 * 
 	 * @return list
 	 */
 	public List<UserDTO> allUsers() {
