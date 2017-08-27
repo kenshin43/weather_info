@@ -15,10 +15,10 @@ public class WeatherServeService implements Service {
 	}
 
 	@Override
-	public void Excute(Scanner sc) {
+	public void execute(Scanner sc) {
 		WeatherDAO dao = WeatherDAO.getInstance();
 
-		Map<Long, String> codeList = dao.faveriteLocal("dddd");
+		Map<Long, String> codeList = dao.faveriteLocal(id);
 		codeList.entrySet().forEach(t -> {
 			List<WeatherDTO> list = dao.weatherServe(t.getKey());
 			System.out.println("======================  기상정보 : [[" + t.getValue() + "]]");
@@ -32,26 +32,22 @@ public class WeatherServeService implements Service {
 					sb.append("모래 : ");
 				}
 				sb.append(x.getHour());
-				sb.append("\t시\t ");
-				sb.append("기온 : ");
+				sb.append("\t시\t 기온 : ");
 				sb.append(x.getTemp());
 				sb.append("℃\t강수확율 : ");
 				sb.append(x.getPop());
-				sb.append("%  ");
-				sb.append("<");
+				sb.append("%  <");
 				sb.append(x.getWfKOR());
-				sb.append(">\t");
-				sb.append("풍량 : ");
+				sb.append(">\t풍량 : ");
 				sb.append(x.getWdKOR());
 				sb.append("|");
 				sb.append(x.getWs());
-				sb.append("m/s");
-				sb.append("\t강수량 : ");
+				sb.append("m/s\t강수량 : ");
 				sb.append(x.getR06());
 				sb.append("mm");
 				System.out.println(sb.toString());
 			});
 			System.out.println("-----------------------------------------------------------------------------------");
 		});
-	}// end of Excute;
+	}// end of execute;
 }

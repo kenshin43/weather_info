@@ -16,7 +16,7 @@ public class ProductADService implements Service {
 	}
 
 	@Override
-	public void Excute(Scanner sc) {
+	public void execute(Scanner sc) {
 		int[] i = new int[1];
 		StoreDAO dao = StoreDAO.getInstance();
 		System.out.println("======================  상품샾 : " + id + "님 환영합니다!!");
@@ -64,11 +64,6 @@ public class ProductADService implements Service {
 				break;
 			}
 		}
-	}
-
-	public static void main(String[] args) {
-		ProductADService p = new ProductADService("dddd");
-		p.Excute(new Scanner(System.in));
 	}
 
 	public int intScan(int size, Scanner sc) {

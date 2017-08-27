@@ -136,16 +136,7 @@ public class UserDAO {
 			if (rs.next()) {
 				String dbSalt = rs.getString("salt"); // DB에서 가져온 salt
 				String dbPasswd = rs.getString("pw"); // DB에서 가져온 비밀번호
-
-				
-				
-				 
-				
-				System.out.println("입력 : " + inputpw);
-//
 				boolean pass = MessageDigest.isEqual(inputpw.getBytes(), dbPasswd.getBytes()); // true,false
-//				System.out.println(pass);
-
 				if (pass == true) {
 					uname = rs.getString("name");
 				} else {

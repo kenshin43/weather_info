@@ -54,7 +54,6 @@ public class StoreDAO {
 
 	public Map<Integer, String> cateList() {
 		Map<Integer, String> category = new HashMap<Integer, String>();
-		List<ProductDTO> list = new ArrayList<ProductDTO>();
 		DBUtil db = DBUtil.getInstance();
 		Connection con = db.getConnection();
 		String sql = "select cate_code,cate_name from category";
@@ -75,8 +74,7 @@ public class StoreDAO {
 
 	public int saleProduct(String productName) {
 		int price = -1;
-		Map<Integer, String> category = new HashMap<Integer, String>();
-		List<ProductDTO> list = new ArrayList<ProductDTO>();
+
 		DBUtil db = DBUtil.getInstance();
 		Connection con = db.getConnection();
 		String sql = "select price from product where pro_name = ?";

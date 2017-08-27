@@ -4,6 +4,6 @@ import java.util.Scanner;
 
 public interface Service {
 	
-	public void Excute(Scanner sc);
+	public void execute(Scanner sc);
 	
 }

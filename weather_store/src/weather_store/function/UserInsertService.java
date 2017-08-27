@@ -9,33 +9,28 @@ import weather_store.util.SecurityUtil;
 public class UserInsertService implements Service{
 
 	@Override
-	public void Excute(Scanner sc) {
+	public void execute(Scanner sc) {
 		
-		System.out.println("==========회원가입==========");
-		System.out.print("아이디 : ");
+		System.out.println("======================  회원가입");
+		System.out.print("아이디 \t:");
 		String id = sc.nextLine();
-		System.out.print("비밀번호 : ");
+		System.out.print("비밀번호 \t:");
 		String pw = sc.nextLine();
 		String newpwd=SecurityUtil.encrypt(pw);
-		System.out.print("이름 : ");
+		System.out.print("이름 \t:");
 		String name = sc.nextLine();
-		System.out.print("주소 : ");
+		System.out.print("주소 \t:");
 		String addr = sc.nextLine();
-		System.out.println("----------------------------");
+		System.out.println("-----------------------------------------------------------------------------------");
 		
 		int check = UserDAO.getInstance().userInsert(new UserDTO(id, newpwd, name, addr));
 		
 		if(check == 0) {
-			System.out.println("회원가입 실패");
+			System.out.println("안내 :  회원가입 실패");
 		} else {
-			System.out.println("회원가입 성공");
+			System.out.println("안내 :  회원가입 성공");
 		}
 		
 	} // end of method
 	
-	public static void main(String[] args) {
-		UserInsertService u = new UserInsertService();
-		u.Excute(new Scanner(System.in));
-		
-	} // end of main
 } // end of class

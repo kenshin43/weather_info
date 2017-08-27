@@ -18,7 +18,7 @@ public class UserListService implements Service {
 	}
 
 	@Override
-	public void Excute(Scanner sc) {
+	public void execute(Scanner sc) {
 		System.out.println("==================회원목록==================");
 
 		List<UserDTO> list = UserDAO.getInstance().allUsers();
@@ -38,6 +38,6 @@ public class UserListService implements Service {
 
 	public static void main(String[] args) {
 		UserListService u = new UserListService();
-		u.Excute(new Scanner(System.in));
+		u.execute(new Scanner(System.in));
 	}
 } // end of class
