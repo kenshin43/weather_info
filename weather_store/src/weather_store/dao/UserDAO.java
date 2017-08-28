@@ -46,9 +46,6 @@ public class UserDAO {
 			ps = con.prepareStatement(
 					"INSERT INTO person (id, pw, name, addr, salt, passwd) VALUES (?, ?, ?, ?, ?, ?)");
 
-//			String salt = SHA256Util.generateSalt();
-//			String newPassword = SHA256Util.getEncrypt(user.getPw(), salt);
-
 			ps.setString(1, user.getId());
 			ps.setString(2, user.getPw());
 			ps.setString(3, user.getName());
@@ -57,8 +54,6 @@ public class UserDAO {
 			ps.setString(6, user.getPasswd());
 			result = ps.executeUpdate();
 
-//			System.out.println("salt : " + salt);
-//			System.out.println("newPassword : " + newPassword);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e + "=>userInsert fail");
@@ -101,24 +96,6 @@ public class UserDAO {
 	 * @param pw
 	 * @return uname
 	 */
-//
-//	public Boolean login(String id, String pwd) throws NoSuchAlgorithmException {
-//		DBUtil db = DBUtil.getInstance();
-//		Connection con = db.getConnection();
-//		PreparedStatement pstmt = null;
-//		ResultSet rs = null;
-//		String sql = "SELECT name, pw, salt FROM person WHERE id = ?";
-//		boolean result = false;
-//		try {
-//			pstmt = con.prepareStatement(sql);
-//			pstmt.setString(1, id);
-//			rs = pstmt.executeQuery();
-////			result = SHA256Util.decodePwd(rs, pwd);
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return result;
-//	}
 
 	public  static String userLogin(String id, String inputpw) {
 		DBUtil db = DBUtil.getInstance();
@@ -134,7 +111,6 @@ public class UserDAO {
 			rs = ps.executeQuery();
 
 			if (rs.next()) {
-				String dbSalt = rs.getString("salt"); // DB에서 가져온 salt
 				String dbPasswd = rs.getString("pw"); // DB에서 가져온 비밀번호
 				boolean pass = MessageDigest.isEqual(inputpw.getBytes(), dbPasswd.getBytes()); // true,false
 				if (pass == true) {
