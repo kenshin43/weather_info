@@ -3,10 +3,12 @@ package weather_store.function;
 import java.util.Scanner;
 
 import weather_store.dao.UserDAO;
+import weather_store.dto.UserDTO;
 import weather_store.util.SecurityUtil;
 
 public class UserLoginService implements Service {
-	private String id = "";
+	private UserDTO dto;
+	private String id;
 
 	public UserLoginService() {
 	}
@@ -22,17 +24,22 @@ public class UserLoginService implements Service {
 			String pw = sc.nextLine();
 			String newpwd = SecurityUtil.encrypt(pw);
 			System.out.println("-----------------------------------------------------------------------------------");
+			try {
 			if (UserDAO.userLogin(id, newpwd).equals(newpwd)) {
 				System.out.println("안내 :  로그인에 실패하였습니다.");
 			} else {
-				System.out.println("안내 :  로그인에 성공하였습니다. 환영합니다 " + id + "님!");
 				break;
+			}
+			} catch(NullPointerException e) {
+				System.out.println("안내 :  로그인에 실패하였습니다.");
 			}
 		}
 	} // end of method
 
-	public String getId() {
-		return id;
+	public UserDTO getId() {
+		dto = UserDAO.getInstance().userInfo(id);
+		System.out.println("안내 :  로그인에 성공하였습니다. 환영합니다 " + dto.getName() + "님!");
+		return dto;
 	}
 
 } // end of class

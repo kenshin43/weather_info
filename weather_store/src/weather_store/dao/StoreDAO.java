@@ -74,20 +74,20 @@ public class StoreDAO {
 
 	public int saleProduct(String productName) {
 		int price = -1;
-
+		int proCode = -1;
 		DBUtil db = DBUtil.getInstance();
 		Connection con = db.getConnection();
-		String sql = "select price from product where pro_name = ?";
+		String sql = "select pro_code from product where pro_name = ?";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, productName);
 			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
-				price = rs.getInt("price");
+			if (rs.next()) {
+				proCode = rs.getInt("pro_code");
 			}
+			pstmt.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

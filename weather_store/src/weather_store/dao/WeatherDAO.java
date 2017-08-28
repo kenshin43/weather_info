@@ -47,6 +47,11 @@ public class WeatherDAO {
 		System.out.println("작업 완료");
 		return status;
 	}
+	
+	public static void main(String[] args) {
+		WeatherDAO w = WeatherDAO.getInstance();
+		w.weatherSQLInsert();
+	}
 
 	public Map<Long, String> faveriteLocal(String id) {
 		Map<Long, String> map = new HashMap<Long, String>();

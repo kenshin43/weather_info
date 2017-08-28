@@ -180,7 +180,6 @@ public class WeatherRSS {
 				List<Map<String, String>> list = result.get(i);
 
 				for (Map<String, String> map : list) {
-					System.out.println(i + ". " + map);
 					pstmt.setString(1, map.get("temp"));
 					pstmt.setString(2, map.get("tmx"));
 					pstmt.setString(3, map.get("tmn"));
@@ -202,7 +201,7 @@ public class WeatherRSS {
 					pstmt.setString(19, map.get("y"));
 					pstmt.setString(20, map.get("seq"));
 					pstmt.setString(20, map.get("hour"));
-					System.out.println(pstmt.executeUpdate()); // 실행.
+					pstmt.executeUpdate(); // 실행.
 				}
 			}
 			status = 1;
@@ -247,7 +246,6 @@ public class WeatherRSS {
 				for (Element dataChild : el.getChildren()) {
 					data.put(dataChild.getName(), dataChild.getTextTrim());
 				}
-				System.out.println(data); // 콘솔에 출력.
 				result.add(data);
 			}
 		} catch (JDOMException e) {

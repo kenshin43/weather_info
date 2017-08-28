@@ -5,20 +5,21 @@ import java.util.Map;
 import java.util.Scanner;
 
 import weather_store.dao.WeatherDAO;
+import weather_store.dto.UserDTO;
 import weather_store.dto.WeatherDTO;
 
 public class WeatherServeService implements Service {
-	private String id;
+	private UserDTO dto;
 
-	public WeatherServeService(String id) {
-		this.id = id;
+	public WeatherServeService(UserDTO dto) {
+		this.dto = dto;
 	}
 
 	@Override
 	public void execute(Scanner sc) {
 		WeatherDAO dao = WeatherDAO.getInstance();
 
-		Map<Long, String> codeList = dao.faveriteLocal(id);
+		Map<Long, String> codeList = dao.faveriteLocal(dto.getId());
 		codeList.entrySet().forEach(t -> {
 			List<WeatherDTO> list = dao.weatherServe(t.getKey());
 			System.out.println("======================  기상정보 : [[" + t.getValue() + "]]");
