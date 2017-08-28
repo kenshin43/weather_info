@@ -7,19 +7,20 @@ import java.util.Map;
 import java.util.Scanner;
 
 import weather_store.dao.StoreDAO;
+import weather_store.dto.UserDTO;
 
 public class ProductADService implements Service {
-	private String id;
+	private UserDTO dto;
 
-	public ProductADService(String id) {
-		this.id = id;
+	public ProductADService(UserDTO dto) {
+		this.dto = dto;
 	}
 
 	@Override
 	public void execute(Scanner sc) {
 		int[] i = new int[1];
 		StoreDAO dao = StoreDAO.getInstance();
-		System.out.println("======================  상품샾 : " + id + "님 환영합니다!!");
+		System.out.println("======================  상품샾 : " + dto.getName() + "님 환영합니다!!");
 		Map<Integer, String> cateMap = dao.cateList();
 		List<Integer> cateList = new ArrayList<Integer>();
 		while (true) {
@@ -97,7 +98,7 @@ public class ProductADService implements Service {
 			if (price == -1) {
 				System.out.println("안내 :  잘못 입력하셨습니다. 다시 입력하거나, exit를 입력하여 구매를 취소합니다.");
 			} else {
-				System.out.println(id + "님! " + name + "을(를) " + price + "원에 구매하였습니다!!");
+				System.out.println(dto.getName() + "님! " + name + "을(를) " + price + "원에 구매하였습니다!!");
 			}
 		}
 	}

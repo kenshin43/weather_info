@@ -3,12 +3,13 @@ package weather_store.function;
 import java.util.Scanner;
 
 import weather_store.dao.UserDAO;
+import weather_store.dto.UserDTO;
 
 public class UserDeleteService implements Service {
-	private String id="";
+	private UserDTO dto;
 
-	public UserDeleteService(String id) {
-		this.id = id;
+	public UserDeleteService(UserDTO dto) {
+		this.dto = dto;
 	}
 
 	@Override
@@ -16,7 +17,7 @@ public class UserDeleteService implements Service {
 		System.out.println("======================  È¸¿øÅ»Åð");
 		System.out.println("-----------------------------------------------------------------------------------");
 
-		int check = UserDAO.getInstance().userDelete(id);
+		int check = UserDAO.getInstance().userDelete(dto.getId());
 
 		if (check == 0) {
 			System.out.println("¾È³» :  È¸¿øÅ»Åð ½ÇÆÐ");

@@ -46,8 +46,8 @@ public class UserDAO {
 			ps = con.prepareStatement(
 					"INSERT INTO person (id, pw, name, addr, salt, passwd) VALUES (?, ?, ?, ?, ?, ?)");
 
-//			String salt = SHA256Util.generateSalt();
-//			String newPassword = SHA256Util.getEncrypt(user.getPw(), salt);
+			// String salt = SHA256Util.generateSalt();
+			// String newPassword = SHA256Util.getEncrypt(user.getPw(), salt);
 
 			ps.setString(1, user.getId());
 			ps.setString(2, user.getPw());
@@ -57,8 +57,8 @@ public class UserDAO {
 			ps.setString(6, user.getPasswd());
 			result = ps.executeUpdate();
 
-//			System.out.println("salt : " + salt);
-//			System.out.println("newPassword : " + newPassword);
+			// System.out.println("salt : " + salt);
+			// System.out.println("newPassword : " + newPassword);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e + "=>userInsert fail");
@@ -68,6 +68,33 @@ public class UserDAO {
 		return result;
 
 	} // end of userInsert()
+
+	public UserDTO userInfo(String id) {
+		UserDTO dto = new UserDTO();
+		DBUtil db = DBUtil.getInstance();
+		Connection con = db.getConnection();
+		ResultSet rs = null; // select시에 추가해야 할 부분
+		PreparedStatement ps = null;
+
+		try {
+			ps = con.prepareStatement("SELECT id, name, addr,isadmin FROM person where id=?");
+			ps.setString(1, id);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				dto.setId(rs.getString("id"));
+				dto.setName(rs.getString("name"));
+				dto.setAddr(rs.getString("addr"));
+				dto.setIsAdmin(rs.getInt("isadmin"));
+			}
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			db.close(rs, con, ps);
+		}
+		return dto;
+	}
 
 	/**
 	 * 회원 탈퇴
@@ -101,26 +128,26 @@ public class UserDAO {
 	 * @param pw
 	 * @return uname
 	 */
-//
-//	public Boolean login(String id, String pwd) throws NoSuchAlgorithmException {
-//		DBUtil db = DBUtil.getInstance();
-//		Connection con = db.getConnection();
-//		PreparedStatement pstmt = null;
-//		ResultSet rs = null;
-//		String sql = "SELECT name, pw, salt FROM person WHERE id = ?";
-//		boolean result = false;
-//		try {
-//			pstmt = con.prepareStatement(sql);
-//			pstmt.setString(1, id);
-//			rs = pstmt.executeQuery();
-////			result = SHA256Util.decodePwd(rs, pwd);
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return result;
-//	}
+	//
+	// public Boolean login(String id, String pwd) throws NoSuchAlgorithmException {
+	// DBUtil db = DBUtil.getInstance();
+	// Connection con = db.getConnection();
+	// PreparedStatement pstmt = null;
+	// ResultSet rs = null;
+	// String sql = "SELECT name, pw, salt FROM person WHERE id = ?";
+	// boolean result = false;
+	// try {
+	// pstmt = con.prepareStatement(sql);
+	// pstmt.setString(1, id);
+	// rs = pstmt.executeQuery();
+	//// result = SHA256Util.decodePwd(rs, pwd);
+	// } catch (SQLException e) {
+	// e.printStackTrace();
+	// }
+	// return result;
+	// }
 
-	public  static String userLogin(String id, String inputpw) {
+	public static String userLogin(String id, String inputpw) {
 		DBUtil db = DBUtil.getInstance();
 		Connection con = db.getConnection();
 		ResultSet rs = null; // select시에 추가해야 할 부분
@@ -141,6 +168,7 @@ public class UserDAO {
 					uname = rs.getString("name");
 				} else {
 					System.out.println("아이디/비밀번호를 잘못 입력하셨습니다.");
+					uname = null;
 				}
 			} else {
 				System.out.println("id 없음");
@@ -168,7 +196,7 @@ public class UserDAO {
 		PreparedStatement ps = null;
 
 		try {
-			ps = con.prepareStatement("SELECT id, name, addr FROM person");
+			ps = con.prepareStatement("SELECT id, name, addr, isadmin FROM person");
 			rs = ps.executeQuery();
 			while (rs.next()) { // while문 rs의 값을 커서로 담은 로우 하나씩 읽는 함수
 								// (더이상 값이 없으면 false 반환)
@@ -187,6 +215,27 @@ public class UserDAO {
 			db.close(rs, con, ps);
 		}
 		return list;
-	} // end of allUsers()
+	} // end of allUsers()'
+
+	public int userUpdate(UserDTO dto) {
+		int result = -1;
+		DBUtil db = DBUtil.getInstance();
+		Connection con = db.getConnection();
+		PreparedStatement ps = null;
+		try {
+			ps = con.prepareStatement("update person set name = ?,addr = ? where id = ?");
+			ps.setString(1, dto.getName());
+			ps.setString(2, dto.getAddr());
+			ps.setString(3, dto.getId());
+			result = ps.executeUpdate();
+		} catch (SQLException se) {
+			se.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			db.close(con, ps);
+		}
+		return result;
+	}
 
 } // end of class
