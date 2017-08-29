@@ -18,19 +18,19 @@ public class UserLoginService implements Service {
 		// TODO Auto-generated method stub
 		while (true) {
 			System.out.println("======================  로그인");
-			System.out.print("아이디 \t:");
+			System.out.print("아이디\t:");
 			id = sc.nextLine();
-			System.out.print("비밀번호 \t:");
-			String pw = sc.nextLine();
+			System.out.print("비밀번호\t:");
+			String pw = new String(System.console().readPassword());
 			String newpwd = SecurityUtil.encrypt(pw);
 			System.out.println("-----------------------------------------------------------------------------------");
 			try {
-			if (UserDAO.userLogin(id, newpwd).equals(newpwd)) {
-				System.out.println("안내 :  로그인에 실패하였습니다.");
-			} else {
-				break;
-			}
-			} catch(NullPointerException e) {
+				if (UserDAO.userLogin(id, newpwd).equals(newpwd)) {
+					System.out.println("안내 :  로그인에 실패하였습니다.");
+				} else {
+					break;
+				}
+			} catch (NullPointerException e) {
 				System.out.println("안내 :  로그인에 실패하였습니다.");
 			}
 		}
