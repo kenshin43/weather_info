@@ -25,12 +25,12 @@ public class ProductADService implements Service {
 		List<Integer> cateList = new ArrayList<Integer>();
 		while (true) {
 			i[0] = 1;
-			System.out.println("선택 : ---------------------------------------------------");
+			System.out.println("선택 : -------------------------------------------------");
 			System.out.println("1. 전품목 보기\t2. 카테고리 선택\t3. 메인");
 			System.out.println("--------------------------------------------------------");
 			switch (sc.nextLine()) {
 			case "1":
-				System.out.println("전 품목 보기 : --------------------------------------------");
+				System.out.println("전 품목 보기 : ------------------------------------------");
 				cateMap.entrySet().forEach(t -> {
 					System.out.println("----->" + t.getValue() + "의 <<목록>>");
 					dao.productList(t.getKey()).forEach(x -> {
@@ -43,7 +43,7 @@ public class ProductADService implements Service {
 				sale(dao, sc);
 				break;
 			case "2":
-				System.out.println("카테고리 별 : --------------------------------------------");
+				System.out.println("카테고리 별 : ------------------------------------------");
 				dao.cateList().entrySet().forEach(t -> {
 					cateList.add(t.getKey());
 					System.out.println(i[0]++ + "|" + t.getValue());

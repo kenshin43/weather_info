@@ -18,7 +18,7 @@ public class UserLoginService implements Service {
 		// TODO Auto-generated method stub
 		while (true) {
 			System.out.println("======================  로그인");
-			System.out.print("아이디\t:");
+			System.out.print("아이디\t\t:");
 			id = sc.nextLine();
 			System.out.print("비밀번호\t:");
 			String pw = new String(System.console().readPassword());

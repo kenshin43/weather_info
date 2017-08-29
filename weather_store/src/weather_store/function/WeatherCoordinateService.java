@@ -31,7 +31,7 @@ public class WeatherCoordinateService implements Service {
 			faveriteList.add(t.getKey());
 		});
 		while (true) {
-			System.out.println("선택 : ------------------------------------------------------------------------------");
+			System.out.println("선택 : ----------------------------------------------------------------------------");
 			System.out.println("1. 선호지역 등록\t2. 선호지역 삭제\t3. 선호지역 수정\t4. 메인");
 			System.out.println("-----------------------------------------------------------------------------------");
 			switch (sc.nextLine()) {
@@ -41,7 +41,7 @@ public class WeatherCoordinateService implements Service {
 					System.out.println("안내 : 선호지역 등록갯수를 초과하였습니다.");
 				} else {
 					System.out.println(
-							"선호 지역 등록 : -----------------------------------------------------------------------");
+							"선호 지역 등록 : ---------------------------------------------------------------------");
 					System.out.println("└원하는 지역을 입력하세요.");
 					List<CoordinateDTO> list = dao.coordinateSearch(sc.nextLine());
 					if (list.size() == 0) {
@@ -65,7 +65,7 @@ public class WeatherCoordinateService implements Service {
 				break;
 			case "2": {
 				System.out
-						.println("선호 지역 삭제 : -----------------------------------------------------------------------");
+						.println("선호 지역 삭제 : ---------------------------------------------------------------------");
 
 				System.out.println("└위 목록에서 지우고자 하는 지역의 번호를 입력하세요.");
 				select = intScan(faveriteList.size(), sc);
@@ -81,7 +81,7 @@ public class WeatherCoordinateService implements Service {
 			case "3":
 				int result = 0;
 				System.out
-						.println("선호 지역 변경 : -----------------------------------------------------------------------");
+						.println("선호 지역 변경 : ---------------------------------------------------------------------");
 				System.out.println("└위 목록에서 변경하고자 하는 지역의 번호를 입력하세요.");
 				select = intScan(faveriteList.size(), sc);
 				System.out.println("안내 :  이제 변경을 원하는 지역을 입력해 주세요.");
