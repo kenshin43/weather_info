@@ -115,7 +115,7 @@ public class StoreDAO {
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				price = rs.getInt("price");
+				price = rs.getInt(1);
 			}
 			pstmt.execute();
 			db.close(con, pstmt);
