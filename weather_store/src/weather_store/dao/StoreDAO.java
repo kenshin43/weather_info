@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,7 +78,7 @@ public class StoreDAO {
 		int proCode = -1;
 		DBUtil db = DBUtil.getInstance();
 		Connection con = db.getConnection();
-		String sql = "select pro_code from product where pro_name = ?";
+		String sql = "select price,pro_code from product where pro_name = ?";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
@@ -86,8 +87,38 @@ public class StoreDAO {
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				proCode = rs.getInt("pro_code");
+				price = rs.getInt("price");
 			}
 			pstmt.execute();
+			db.close(con, pstmt);
+			con = db.getConnection();
+			sql = "insert into sell values (?,?)";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setLong(1, new Date().getTime());
+			pstmt.setInt(2, proCode);
+			pstmt.execute();
+			db.close(con, pstmt);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return price;
+	}
+
+	public int saleTotal() {
+		int price = -1;
+		DBUtil db = DBUtil.getInstance();
+		Connection con = db.getConnection();
+		String sql = "select sum(price) from sell s join product p on p.pro_code=s.pro_code ";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				price = rs.getInt("price");
+			}
+			pstmt.execute();
+			db.close(con, pstmt);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

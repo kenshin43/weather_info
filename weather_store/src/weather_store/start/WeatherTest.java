@@ -82,6 +82,7 @@ public class WeatherTest {
 					new WeatherInfoUpdate().execute(sc);
 					break;
 				case "3":
+					new ProductSaleTotal().execute(sc);
 					break;
 				case "0":
 					System.out.println("관리서비스를 종료합니다.");
