@@ -22,7 +22,7 @@ public class DBUtil {
 	static {
 		Properties prop = new Properties();
 		try {
-			prop.load(new FileReader("src/jdbc.properties"));
+			prop.load(new FileReader("jdbc.properties"));
 		} catch (FileNotFoundException e1) {
 			System.out.println("지정된 파일을 찾을 수 없습니다.");
 		} catch (IOException e) {

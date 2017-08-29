@@ -153,6 +153,7 @@ public class UserDAO {
 				}
 			} else {
 				System.out.println("id ¾øÀ½");
+				uname = null;
 			}
 		} catch (SQLException se) {
 			System.out.println(se + "=> userLogin fail");
