@@ -1,5 +1,9 @@
 package weather_store.dto;
-
+/**
+ * 날씨 정보를 제공하는 클래스
+ * @author 신승엽
+ *
+ */
 public class WeatherDTO {
 	private int x;
 	private int y;

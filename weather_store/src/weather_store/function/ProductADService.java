@@ -8,7 +8,10 @@ import java.util.Scanner;
 
 import weather_store.dao.StoreDAO;
 import weather_store.dto.UserDTO;
-
+/**
+ * 제품을 소개하고 구매하는 클래스 입니다.
+ * @author 신승엽
+ */
 public class ProductADService implements Service {
 	private UserDTO dto;
 
@@ -66,7 +69,12 @@ public class ProductADService implements Service {
 			}
 		}
 	}
-
+/**
+ * 배열의 크기에 맞는 입력을 받아오는 메소드
+ * @param size 배열의 크기
+ * @param sc 스캐너
+ * @return
+ */
 	public int intScan(int size, Scanner sc) {
 		int select = 0;
 		while (true) {
@@ -85,6 +93,11 @@ public class ProductADService implements Service {
 		return select;
 	}
 
+	/**
+	 * 사용자가 구매한 제품을 데이터베이스에 전송하는 메소드
+	 * @param dao StoreDAO
+	 * @param sc 스캐너
+	 */
 	public void sale(StoreDAO dao, Scanner sc) {
 		String name = "";
 		System.out.println("안내 :  구매할 이름의 제품을 입력해 주세요. exit를 입력하면 종료됩니다.");

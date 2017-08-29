@@ -4,6 +4,11 @@ import java.util.Scanner;
 
 import weather_store.dao.StoreDAO;
 
+/**
+ * 매출액을 조회하는 클래스
+ * @author 신승엽
+ *
+ */
 public class ProductSaleTotal implements Service {
 
 	@Override

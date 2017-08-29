@@ -3,7 +3,12 @@ package weather_store.function;
 import java.util.Scanner;
 
 import weather_store.dao.WeatherDAO;
-
+/**
+ * 날씨 정보를 최신화 하는 클래스 입니다.
+ * 쓰래드를 이용하여 백그라운드로 실행됩니다.
+ * @author 신승엽
+ *
+ */
 public class WeatherInfoUpdate implements Service {
 
 	@Override

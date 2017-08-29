@@ -14,7 +14,11 @@ import weather_store.dto.WeatherDTO;
 import weather_store.town.TownCodeService;
 import weather_store.town.WeatherRSS;
 import weather_store.util.DBUtil;
-
+/**
+ * 날씨 정보를 가지고 와서 각 정보를 처리하는 메소드를 지닌 클래스입니다.
+ * @author 신승엽
+ *
+ */
 public class WeatherDAO {
 	private static WeatherDAO weatherDAO;
 
@@ -41,8 +45,8 @@ public class WeatherDAO {
 
 		List<List<Map<String, String>>> result = r.getAllTownForecast();
 
-		// r.insertData(result); // 최초 실행 한번만 실행할 것.
-		status = r.updateData(result); // 기상청으로부터 가져온 정보를 DB에 업데이트
+		// r.insertData(result);
+		status = r.updateData(result);
 
 		System.out.println("작업 완료");
 		return status;

@@ -1,5 +1,9 @@
 package weather_store.dto;
-
+/**
+ * 지역 정보를 저장하는 클래스
+ * @author 신승엽
+ *
+ */
 public class CoordinateDTO {
 
 	private String code;

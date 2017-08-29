@@ -8,6 +8,12 @@ import weather_store.dao.WeatherDAO;
 import weather_store.dto.UserDTO;
 import weather_store.dto.WeatherDTO;
 
+/**
+ * 사용자가 지정한 선호지역의 날씨 정보를 출력하는 클래스 입니다.
+ * 
+ * @author 신승엽
+ *
+ */
 public class WeatherServeService implements Service {
 	private UserDTO dto;
 

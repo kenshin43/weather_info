@@ -16,7 +16,11 @@ import org.json.simple.JSONValue;
 
 import weather_store.dto.CoordinateDTO;
 import weather_store.util.DBUtil;
-
+/**
+ * 지역 코드를 가지고 오는 클래스입니다.
+ * @author 신승엽
+ *
+ */
 public class TownCodeService {
 
 	// 최상 노드 URL

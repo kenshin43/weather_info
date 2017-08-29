@@ -4,7 +4,11 @@ import java.util.Scanner;
 
 import weather_store.dto.UserDTO;
 import weather_store.function.*;
-
+/**
+ * WIS를 실행하는 메인 클래스 입니다.
+ * @author 신승엽
+ *
+ */
 public class WeatherTest {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);

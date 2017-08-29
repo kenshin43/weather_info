@@ -12,7 +12,11 @@ import java.util.Map;
 
 import weather_store.dto.ProductDTO;
 import weather_store.util.DBUtil;
-
+/**
+ * 제품의 정보를 SQL에서 받아와 처리하는 메소드의 모음입니다.
+ * @author 신승엽
+ *
+ */
 public class StoreDAO {
 	private static StoreDAO dao;
 

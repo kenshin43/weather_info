@@ -9,7 +9,12 @@ import java.util.Scanner;
 import weather_store.dao.WeatherDAO;
 import weather_store.dto.CoordinateDTO;
 import weather_store.dto.UserDTO;
-
+/**
+ * 선호지역을 관리하는 클래스 입니다.
+ * 선호지역 등록 및 선호지역 삭제, 선호지역 수정 기능을 제공합니다.
+ * @author 신승엽
+ *
+ */
 public class WeatherCoordinateService implements Service {
 	private UserDTO dto;
 
@@ -124,6 +129,12 @@ public class WeatherCoordinateService implements Service {
 
 	}// end of main
 
+	/**
+	 * 배열의 크기에 맞는 값을 사용자가 입력하도록 하는 메소드
+	 * @param size 배열의 크기
+	 * @param sc 스캐너
+	 * @return
+	 */
 	public int intScan(int size, Scanner sc) {
 		int select = 0;
 		while (true) {

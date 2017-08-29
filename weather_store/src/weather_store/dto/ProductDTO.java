@@ -1,5 +1,9 @@
 package weather_store.dto;
-
+/**
+ * Product의 정보를 담는 클래스
+ * @author 신승엽
+ *
+ */
 public class ProductDTO {
 	private int proCode;
 	private String proName;
